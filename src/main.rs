@@ -54,6 +54,10 @@ fn App() -> impl IntoView {
       <div style:height="100px"></div>
 
       <NumericInput/>
+
+      <div style:height="100px"></div>
+
+      <Effect/>
     }
 }
 
@@ -205,4 +209,19 @@ fn NumericInput() -> impl IntoView {
         </ErrorBoundary>
       </label>
     }
+}
+
+#[component]
+fn Effect() -> impl IntoView {
+    let (toggle, set_toggle) = create_signal(false);
+
+    create_effect(move |_| {
+        if toggle() {
+            window().alert_with_message("Toggled on!").unwrap();
+        }
+    });
+
+    let flip = move |_| set_toggle.update(|toggle| *toggle = !*toggle);
+
+    view! { <button on:click=flip>Toggle</button> }
 }
