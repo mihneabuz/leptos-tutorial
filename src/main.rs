@@ -1,3 +1,7 @@
+mod async_stuff;
+
+use async_stuff::*;
+
 use leptos::ev::SubmitEvent;
 use leptos::*;
 
@@ -58,6 +62,10 @@ fn App() -> impl IntoView {
       <div style:height="100px"></div>
 
       <Effect/>
+
+      <div style:height="100px"></div>
+
+      <AsyncStuff/>
     }
 }
 
