@@ -9,6 +9,8 @@ edition = "2021"
 console_error_panic_hook = "0.1.7"
 leptos = { version = "0.6.5", features = ["csr", "nightly"] }
 leptos_router = { version = "0.6", features = ["csr"] }
+leptos_meta = "0.6"
+leptos-use = "0.10"
 gloo-timers = { version = "0.3", features = ["futures"] }
 futures = "0.3"
 wasm-bindgen-futures = "0.4"
