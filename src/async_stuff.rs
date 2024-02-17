@@ -3,7 +3,7 @@ use leptos::{html::Input, *};
 
 async fn load_data(secs: u32) -> String {
     TimeoutFuture::new(secs * 1000).await;
-    return String::from("Hello world!");
+    String::from("Hello world!")
 }
 
 #[component]
@@ -74,7 +74,7 @@ fn Action() -> impl IntoView {
         <label>"What do you need to do?" <input type="text" node_ref=input_ref/></label>
         <button type="submit">"Add Todo"</button>
       </form>
-      <p>{move || pending().then(|| "Loading...")}</p>
+      <p>{move || pending().then_some("Loading...")}</p>
       <p>"Submitted: " <code>{move || format!("{:#?}", submitted())}</code></p>
       <p>"Pending: " <code>{move || format!("{:#?}", pending())}</code></p>
       <p>"Todo ID: " <code>{move || format!("{:#?}", todo_id())}</code></p>

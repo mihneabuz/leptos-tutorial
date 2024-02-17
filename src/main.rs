@@ -4,17 +4,29 @@ use async_stuff::*;
 
 use leptos::ev::SubmitEvent;
 use leptos::*;
+use leptos_router::{Route, Router, Routes};
+use wasm_bindgen_futures::js_sys::Math::random;
 
 fn main() {
     console_error_panic_hook::set_once();
 
     mount_to_body(|| {
         view! {
-          <div>
-            <p>hello world !</p>
-            <App/>
-            <Weird/>
-          </div>
+          <Router>
+            <h1>Leptos app</h1>
+            <nav class="nav">
+              <a href="/">Home</a>
+              <a href="/weird">Weird</a>
+              <a href="/async">Async</a>
+            </nav>
+            <main>
+              <Routes>
+                <Route path="/" view=App/>
+                <Route path="/weird" view=Weird/>
+                <Route path="/async" view=AsyncStuff/>
+              </Routes>
+            </main>
+          </Router>
         }
     })
 }
@@ -65,7 +77,7 @@ fn App() -> impl IntoView {
 
       <div style:height="100px"></div>
 
-      <AsyncStuff/>
+      <NavigateRandom/>
     }
 }
 
@@ -232,4 +244,18 @@ fn Effect() -> impl IntoView {
     let flip = move |_| set_toggle.update(|toggle| *toggle = !*toggle);
 
     view! { <button on:click=flip>Toggle</button> }
+}
+
+#[component]
+fn NavigateRandom() -> impl IntoView {
+    let navigate = leptos_router::use_navigate();
+
+    let navigate_random = move |_| {
+        let routes = ["/weird", "/async"];
+        let choice = ((random() * 100.) as usize) % routes.len();
+
+        navigate(routes[choice], Default::default());
+    };
+
+    view! { <button on:click=navigate_random>"I am feeling lucky"</button> }
 }
